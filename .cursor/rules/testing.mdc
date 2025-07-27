@@ -1,0 +1,15 @@
+---
+description: Testing Rules
+globs: *.go
+alwaysApply: false
+---
+# Testing Requirements
+
+## Testing Standards
+
+- **Unit Tests**: Add unit tests for every change made.
+- **Test Coverage**: Ensure new functionality is properly tested.
+- **Test Naming**: Use descriptive test names that explain the scenario being tested.
+- **Mock Usage**: Use mocks appropriately for external dependencies.
+- **Integration Tests**: Add integration tests for complex workflows.
+- **Test Data**: Use meaningful test data that represents real scenarios.

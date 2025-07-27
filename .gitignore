@@ -1,0 +1,41 @@
+# Build artifacts
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+
+# Go build artifacts
+*.test
+*.out
+go.sum
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+
+# Log files
+*.log
+
+# Coverage files
+*.cover
+coverage.out
+
+# Benchmark files
+*.bench
+
+# Example binaries
+examples/*/simple_triangle
+examples/*/complex_polygon 

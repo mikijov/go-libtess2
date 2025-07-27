@@ -1,0 +1,19 @@
+---
+description: Disabled Rules
+globs: disabled
+alwaysApply: false
+---
+
+
+## File-Specific Requirements
+
+### AI Change Log Comments
+If a file contains a comment starting with "AI Change Log:", add a multi-line comment section after it containing:
+1. The AI prompt verbatim (for reproducibility)
+2. Summary of changes made
+
+### Requirements Comments
+If a file contains a comment starting with "Requirements:", update it to properly describe the file's purpose:
+- Make it comprehensive, not just one-liners
+- Only update if changes actually modify the requirements
+- Ensure the description is thorough and explanatory

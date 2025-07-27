@@ -1,0 +1,12 @@
+---
+description: Documentation Rules
+globs: *.go
+alwaysApply: false
+---
+# Documentation Requirements
+
+- **Function Documentation**: Every function or variable that is touched must have documentation. If
+  you modify a function that does not have documentation, add documentation to it.
+- **Code Comments**: Add inline comments for complex logic only; do not comment obvious simple
+  things.
+- **README Updates**: Update README files when adding new features or changing architecture.

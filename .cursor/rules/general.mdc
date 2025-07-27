@@ -1,0 +1,33 @@
+---
+description: General Rules
+globs:
+alwaysApply: true
+---
+
+# General Development Principles
+
+## Core Development Principles
+
+- **Deep Thinking Required**: Think deeply before answering any questions or proposing changes
+- **Confidence Assessment**: Always state your confidence level in answers
+- **Declare Rules**: Always name the Cursor rules that were used to guide this response
+- **Discussion First**: When asked questions, discuss causes, design, and possible approaches before offering code changes
+- **Code Changes Only When Explicitly Requested**: Do not propose code changes unless explicitly asked
+- THE PROBLEM CAN NOT BE SOLVED WITHOUT EXTENSIVE INTERNET RESEARCH.
+- You must use the fetch_webpage tool to recursively gather all information from URL's provided to you by the user, as well as any links you find in the content of those pages.
+- Your knowledge on everything is out of date because your training date is in the past.
+- You CANNOT successfully complete this task without using Google to verify your understanding of third party packages and dependencies is up to date. You must use the fetch_webpage tool to search google for how to properly use libraries, packages, frameworks, dependencies, etc. every single time you install or implement one. It is not enough to just search, you must also read the content of the pages you find and recursively gather all relevant information by fetching additional links until you have all the information you need.
+- Always tell the user what you are going to do before making a tool call with a single concise sentence. This will help them understand what you are doing and why.
+
+## Change Management
+
+- **Conflict Assessment**: Before making changes, check if they conflict with previous requirements
+- **Approval Required**: Do not make changes that affect old functionality without explicit agreement
+- **Better Location Check**: Before suggesting changes, verify if there's a better place in the project to implement them
+- **Do Not Remove Debug Code**: Do not remove debug code unless explicitly asked.
+
+## Code Quality Standards
+
+- **Simplicity**: Simple is better - prefer straightforward solutions
+- **Industry Standards**: Always prefer industry standard or idiomatic recommendations
+- **Unusual Practices Warning**: Warn if implementing something unusual or non-standard
