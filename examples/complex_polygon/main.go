@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	tess "github.com/miki/go-libtess2"
+	tess "github.com/mikijov/go-libtess2"
 )
 
 func main() {
@@ -21,17 +21,17 @@ func main() {
 	// Define a square with a triangular hole
 	// Outer contour (clockwise)
 	outerContour := []tess.Vertex{
-		{X: 0, Y: 0, Z: 0},   // Bottom-left
-		{X: 4, Y: 0, Z: 0},   // Bottom-right
-		{X: 4, Y: 4, Z: 0},   // Top-right
-		{X: 0, Y: 4, Z: 0},   // Top-left
+		{X: 0, Y: 0, Z: 0}, // Bottom-left
+		{X: 4, Y: 0, Z: 0}, // Bottom-right
+		{X: 4, Y: 4, Z: 0}, // Top-right
+		{X: 0, Y: 4, Z: 0}, // Top-left
 	}
 
 	// Inner contour (hole, counter-clockwise)
 	innerContour := []tess.Vertex{
-		{X: 1, Y: 1, Z: 0},   // Bottom-left of hole
-		{X: 3, Y: 1, Z: 0},   // Bottom-right of hole
-		{X: 2, Y: 3, Z: 0},   // Top of hole
+		{X: 1, Y: 1, Z: 0}, // Bottom-left of hole
+		{X: 3, Y: 1, Z: 0}, // Bottom-right of hole
+		{X: 2, Y: 3, Z: 0}, // Top of hole
 	}
 
 	fmt.Printf("Outer contour: %v\n", outerContour)
@@ -145,4 +145,4 @@ func main() {
 
 		testTess.Delete()
 	}
-} 
+}

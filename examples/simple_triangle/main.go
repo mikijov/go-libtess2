@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	tess "github.com/miki/go-libtess2"
+	tess "github.com/mikijov/go-libtess2"
 )
 
 func main() {
@@ -64,4 +64,4 @@ func main() {
 			i, v1, v2, v3,
 			outputVertices[v1], outputVertices[v2], outputVertices[v3])
 	}
-} 
+}

@@ -1,7 +1,7 @@
 # Go Bindings for libtess2
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/miki/go-libtess2)](https://goreportcard.com/report/github.com/miki/go-libtess2)
-[![GoDoc](https://godoc.org/github.com/miki/go-libtess2?status.svg)](https://godoc.org/github.com/miki/go-libtess2)
+[![Go Report Card](https://goreportcard.com/badge/github.com/mikijov/go-libtess2)](https://goreportcard.com/report/github.com/mikijov/go-libtess2)
+[![GoDoc](https://godoc.org/github.com/mikijov/go-libtess2?status.svg)](https://godoc.org/github.com/mikijov/go-libtess2)
 [![License](https://img.shields.io/badge/License-SGI%20Free%20Software%20License%20B%20v2.0-blue.svg)](https://directory.fsf.org/wiki/License:SGIFreeBv2)
 
 Go bindings for the [libtess2](https://github.com/memononen/libtess2) polygon tessellation library. libtess2 is a high-quality polygon tessellator and triangulator library that can handle complex polygons with holes, self-intersections, and other challenging geometric cases.
@@ -27,7 +27,7 @@ Go bindings for the [libtess2](https://github.com/memononen/libtess2) polygon te
 
 ```bash
 # Clone the repository
-git clone https://github.com/miki/go-libtess2.git
+git clone https://github.com/mikijov/go-libtess2.git
 cd go-libtess2
 
 # Build the library and run tests
@@ -60,7 +60,7 @@ package main
 import (
     "fmt"
     "log"
-    "github.com/miki/go-libtess2"
+    "github.com/mikijov/go-libtess2"
 )
 
 func main() {
@@ -312,5 +312,5 @@ This project is licensed under the SGI Free Software License B Version 2.0, the 
 ## Links
 
 - [libtess2 Repository](https://github.com/memononen/libtess2)
-- [Go Documentation](https://godoc.org/github.com/miki/go-libtess2)
+- [Go Documentation](https://godoc.org/github.com/mikijov/go-libtess2)
 - [OpenGL Programming Guide (Red Book)](https://www.glprogramming.com/red/chapter11.html)
