@@ -103,22 +103,17 @@ func (t *Tessellator) AddContour(size int, vertices []Vertex) error {
 		return fmt.Errorf("vertices slice cannot be empty")
 	}
 	
-	// Convert vertices to C array
-	vertexSize := size * 4 // sizeof(float32)
-	dataSize := len(vertices) * vertexSize
-	data := make([]byte, dataSize)
-	
+	// Convert vertices to C array using type-safe approach
+	cVerts := make([]C.float, len(vertices)*size)
 	for i, v := range vertices {
-		offset := i * vertexSize
-		// Copy X, Y coordinates (and Z if 3D)
-		*(*float32)(unsafe.Pointer(&data[offset])) = v.X
-		*(*float32)(unsafe.Pointer(&data[offset+4])) = v.Y
+		cVerts[i*size] = C.float(v.X)
+		cVerts[i*size+1] = C.float(v.Y)
 		if size == 3 {
-			*(*float32)(unsafe.Pointer(&data[offset+8])) = v.Z
+			cVerts[i*size+2] = C.float(v.Z)
 		}
 	}
 	
-	C.tessAddContour(t.tess, C.int(size), unsafe.Pointer(&data[0]), C.int(vertexSize), C.int(len(vertices)))
+	C.tessAddContour(t.tess, C.int(size), unsafe.Pointer(&cVerts[0]), C.int(size*4), C.int(len(vertices)))
 	return nil
 }
 
