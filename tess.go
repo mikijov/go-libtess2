@@ -11,15 +11,6 @@ package tess
 #cgo LDFLAGS: -L./libtess2 -ltess2
 #include "tesselator.h"
 #include <stdlib.h>
-#include <string.h>
-
-// Helper function to convert Go slice to C array
-static void* goSliceToPtr(const void* data, int size) {
-    if (data == NULL) return NULL;
-    void* ptr = malloc(size);
-    memcpy(ptr, data, size);
-    return ptr;
-}
 */
 import "C"
 import (
@@ -202,16 +193,18 @@ func (t *Tessellator) GetVertices() []Vertex {
 		return nil
 	}
 	
-	// Convert C array to Go slice
-	vertices := make([]Vertex, count)
-	vertexSize := 3 // Always 3 coordinates (X, Y, Z)
+	// Convert C array to Go slice using unsafe.Slice
+	ptr := unsafe.Pointer(vertexPtr)
+	verts := unsafe.Slice((*C.TESSreal)(ptr), count*3) // 3 coordinates per vertex
 	
+	// Convert to Vertex slice
+	vertices := make([]Vertex, count)
 	for i := 0; i < count; i++ {
-		offset := i * vertexSize
+		offset := i * 3
 		vertices[i] = Vertex{
-			X: float32(*(*C.TESSreal)(unsafe.Pointer(uintptr(unsafe.Pointer(vertexPtr)) + uintptr(offset*4)))),
-			Y: float32(*(*C.TESSreal)(unsafe.Pointer(uintptr(unsafe.Pointer(vertexPtr)) + uintptr((offset+1)*4)))),
-			Z: float32(*(*C.TESSreal)(unsafe.Pointer(uintptr(unsafe.Pointer(vertexPtr)) + uintptr((offset+2)*4)))),
+			X: float32(verts[offset]),
+			Y: float32(verts[offset+1]),
+			Z: float32(verts[offset+2]),
 		}
 	}
 	
@@ -235,13 +228,17 @@ func (t *Tessellator) GetVertexIndices() []int {
 		return nil
 	}
 	
-	// Convert C array to Go slice
-	indices := make([]int, count)
+	// Convert C array to Go slice using unsafe.Slice
+	ptr := unsafe.Pointer(indexPtr)
+	indices := unsafe.Slice((*C.TESSindex)(ptr), count)
+	
+	// Convert to int slice
+	result := make([]int, count)
 	for i := 0; i < count; i++ {
-		indices[i] = int(*(*C.TESSindex)(unsafe.Pointer(uintptr(unsafe.Pointer(indexPtr)) + uintptr(i*4))))
+		result[i] = int(indices[i])
 	}
 	
-	return indices
+	return result
 }
 
 // GetElementCount returns the number of elements in the tessellated output.
@@ -269,15 +266,19 @@ func (t *Tessellator) GetElements() []int {
 		return nil
 	}
 	
-	// Convert C array to Go slice
+	// Convert C array to Go slice using unsafe.Slice
 	// We'll use a reasonable default size based on typical usage
 	// The actual size depends on element type and polySize, but this should work for most cases
-	elements := make([]int, count*3) // Assume 3 vertices per element (triangles)
+	ptr := unsafe.Pointer(elementPtr)
+	elements := unsafe.Slice((*C.TESSindex)(ptr), count*3) // Assume 3 vertices per element (triangles)
+	
+	// Convert to int slice
+	result := make([]int, count*3)
 	for i := 0; i < count*3; i++ {
-		elements[i] = int(*(*C.TESSindex)(unsafe.Pointer(uintptr(unsafe.Pointer(elementPtr)) + uintptr(i*4))))
+		result[i] = int(elements[i])
 	}
 	
-	return elements
+	return result
 }
 
 // GetElementsWithSize returns the tessellated elements with the specified element type and poly size.
@@ -311,13 +312,17 @@ func (t *Tessellator) GetElementsWithSize(elementType ElementType, polySize int)
 		arraySize = count * polySize // Default to polygons
 	}
 	
-	// Convert C array to Go slice
-	elements := make([]int, arraySize)
+	// Convert C array to Go slice using unsafe.Slice
+	ptr := unsafe.Pointer(elementPtr)
+	elements := unsafe.Slice((*C.TESSindex)(ptr), arraySize)
+	
+	// Convert to int slice
+	result := make([]int, arraySize)
 	for i := 0; i < arraySize; i++ {
-		elements[i] = int(*(*C.TESSindex)(unsafe.Pointer(uintptr(unsafe.Pointer(elementPtr)) + uintptr(i*4))))
+		result[i] = int(elements[i])
 	}
 	
-	return elements
+	return result
 }
 
 // GetTriangles returns the tessellated triangles as a slice of triangle indices.
