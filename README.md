@@ -2,7 +2,7 @@
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/mikijov/go-libtess2)](https://goreportcard.com/report/github.com/mikijov/go-libtess2)
 [![GoDoc](https://godoc.org/github.com/mikijov/go-libtess2?status.svg)](https://godoc.org/github.com/mikijov/go-libtess2)
-[![License](https://img.shields.io/badge/License-SGI%20Free%20Software%20License%20B%20v2.0-blue.svg)](https://directory.fsf.org/wiki/License:SGIFreeBv2)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 Go bindings for the [libtess2](https://github.com/memononen/libtess2) polygon tessellation library. libtess2 is a high-quality polygon tessellator and triangulator library that can handle complex polygons with holes, self-intersections, and other challenging geometric cases.
 
@@ -302,7 +302,7 @@ The Go bindings provide near-native performance with minimal overhead. Benchmark
 
 ## License
 
-This project is licensed under the SGI Free Software License B Version 2.0, the same license as libtess2.
+This project is licensed under the MIT License.
 
 ## Acknowledgments
 
