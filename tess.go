@@ -7,8 +7,8 @@
 package tess
 
 /*
-#cgo CFLAGS: -I${SRCDIR}/libtess2/Include
-#cgo LDFLAGS: -L${SRCDIR}/libtess2 -ltess2
+#cgo CFLAGS: -I${SRCDIR}/libtess2/Include -I${SRCDIR}/libtess2/Source
+#cgo LDFLAGS: -L${SRCDIR}/libtess2 -l:libtess2.a -lm
 #include "tesselator.h"
 #include <stdlib.h>
 */

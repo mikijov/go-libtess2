@@ -4,7 +4,7 @@
 # Compiler settings
 CC = gcc
 CFLAGS = -Wall -Wextra -O2 -fPIC -I./libtess2/Include
-LDFLAGS = -shared
+LDFLAGS = 
 
 # Source files for libtess2
 LIBTESS2_SOURCES = libtess2/Source/tess.c \
@@ -43,21 +43,27 @@ update-libtess2: download-libtess2
 $(LIBTESS2_LIB): $(LIBTESS2_OBJECTS)
 	@echo "Building libtess2 static library..."
 	ar rcs $@ $^
+	@echo "Static library built: $@"
 
 # Compile C source files
 %.o: %.c
 	@echo "Compiling $<..."
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Clean build artifacts
+# Clean build artifacts (but keep the static library)
 clean:
 	@echo "Cleaning build artifacts..."
-	rm -f $(LIBTESS2_OBJECTS) $(LIBTESS2_LIB)
-	rm -f *.o *.a *.so *.dylib
+	rm -f $(LIBTESS2_OBJECTS)
+	rm -f *.o *.so *.dylib
 	go clean -cache
 
-# Clean everything including downloaded source
+# Clean everything including the static library
 clean-all: clean
+	@echo "Cleaning everything including static library..."
+	rm -f $(LIBTESS2_LIB)
+
+# Clean everything including downloaded source
+clean-source: clean-all
 	@echo "Cleaning everything including downloaded source..."
 	rm -rf libtess2
 	rm -f libtess2.zip
@@ -104,8 +110,9 @@ help:
 	@echo "  all              - Build library and run tests"
 	@echo "  download-libtess2 - Download latest libtess2 source"
 	@echo "  update-libtess2  - Update libtess2 to latest version"
-	@echo "  clean            - Clean build artifacts"
-	@echo "  clean-all        - Clean everything including source"
+	@echo "  clean            - Clean build artifacts (keeps libtess2.a)"
+	@echo "  clean-all        - Clean everything including libtess2.a"
+	@echo "  clean-source     - Clean everything including source"
 	@echo "  test             - Run Go tests"
 	@echo "  test-race        - Run Go tests with race detection"
 	@echo "  examples         - Build example programs"
@@ -115,4 +122,4 @@ help:
 	@echo "  lint             - Run linter"
 	@echo "  help             - Show this help"
 
-.PHONY: all download-libtess2 update-libtess2 clean clean-all test test-race examples install bench fmt lint help 
+.PHONY: all download-libtess2 update-libtess2 clean clean-all clean-source test test-race examples install bench fmt lint help 

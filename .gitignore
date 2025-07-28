@@ -1,10 +1,12 @@
 # Build artifacts
 *.o
-*.a
 *.so
 *.dylib
 *.dll
 *.exe
+
+# Allow libtess2.a to be committed (built locally)
+!libtess2/libtess2.a
 
 # Go build artifacts
 *.test

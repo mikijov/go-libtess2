@@ -340,8 +340,8 @@ The Go bindings provide near-native performance with minimal overhead. Benchmark
 
 **Linker errors (`cannot find -ltess2`):**
 - Ensure you have GCC and Make installed
-- The package should automatically build the C library when needed
-- If the automatic build fails, try building manually: `make libtess2/libtess2.a`
+- Build the C library manually: `make libtess2/libtess2.a`
+- The static library is included in the repository, so this should only be needed for development
 
 **Build tool requirements:**
 This package requires:
