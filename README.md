@@ -50,6 +50,40 @@ go test -v ./...
 go install ./...
 ```
 
+### Using as a Dependency
+
+When using this package as a dependency in your project, you need to ensure the libtess2 C library is built. The package will automatically build it if needed, but you must have the build tools installed.
+
+**Prerequisites for dependency usage:**
+- GCC compiler
+- Make
+- Standard C development headers
+
+**Install build dependencies:**
+
+```bash
+# Ubuntu/Debian
+sudo apt-get install build-essential
+
+# Arch Linux
+sudo pacman -S base-devel
+
+# macOS
+xcode-select --install
+
+# Windows (with MSYS2/MinGW)
+pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-make
+```
+
+**Troubleshooting dependency issues:**
+
+If you get linker errors like `cannot find -ltess2`, it means the libtess2 C library hasn't been built. This can happen when:
+
+1. The package is used as a dependency and the C library wasn't built
+2. Build tools (gcc, make) are not installed
+
+**Solution**: Ensure you have the build tools installed and try building again. The package should automatically build the C library if needed.
+
 ## Usage
 
 ### Basic Example
@@ -299,6 +333,30 @@ The Go bindings provide near-native performance with minimal overhead. Benchmark
 4. Add tests for new functionality
 5. Run the test suite
 6. Submit a pull request
+
+## Troubleshooting
+
+### Common Build Issues
+
+**Linker errors (`cannot find -ltess2`):**
+- Ensure you have GCC and Make installed
+- The package should automatically build the C library when needed
+- If the automatic build fails, try building manually: `make libtess2/libtess2.a`
+
+**Build tool requirements:**
+This package requires:
+- GCC compiler
+- Make
+- Standard C development headers
+
+On most systems, install the appropriate build tools:
+- Ubuntu/Debian: `sudo apt-get install build-essential`
+- Arch Linux: `sudo pacman -S base-devel`
+- macOS: `xcode-select --install`
+- Windows (with MSYS2/MinGW): `pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-make`
+
+**Cross-compilation issues:**
+When cross-compiling, ensure the target platform has the necessary C runtime libraries and that the libtess2 library is built for the target architecture.
 
 ## License
 
