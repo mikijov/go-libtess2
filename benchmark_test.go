@@ -7,49 +7,43 @@ import (
 
 // BenchmarkSimpleTriangle benchmarks a simple triangle tessellation
 func BenchmarkSimpleTriangle(b *testing.B) {
-	vertices := []Vertex{
-		{X: 0, Y: 0, Z: 0},
-		{X: 1, Y: 0, Z: 0},
-		{X: 0.5, Y: 1, Z: 0},
+	vertices := []float32{
+		0, 0, 0,
+		1, 0, 0,
+		0.5, 1, 0,
 	}
 
 	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		tessellator := NewTessellator()
 		if tessellator == nil {
 			b.Fatal("Failed to create tessellator")
 		}
 
 		tessellator.AddContour(2, vertices)
-		tessellator.Tessellate(WindingOdd, ElementPolygons, 3, 2, nil)
-		
-		// Access results to ensure they're computed
-		_ = tessellator.GetVertexCount()
-		_ = tessellator.GetElementCount()
-		_ = tessellator.GetVertices()
-		_ = tessellator.GetElements()
-		
+		_, _, _ = tessellator.Tessellate(WindingOdd, ElementPolygons, 3, 2, nil)
+
 		tessellator.Delete()
 	}
 }
 
 // BenchmarkComplexPolygon benchmarks a square with hole tessellation
 func BenchmarkComplexPolygon(b *testing.B) {
-	outerContour := []Vertex{
-		{X: 0, Y: 0, Z: 0},
-		{X: 4, Y: 0, Z: 0},
-		{X: 4, Y: 4, Z: 0},
-		{X: 0, Y: 4, Z: 0},
+	outerContour := []float32{
+		0, 0, 0,
+		4, 0, 0,
+		4, 4, 0,
+		0, 4, 0,
 	}
 
-	innerContour := []Vertex{
-		{X: 1, Y: 1, Z: 0},
-		{X: 3, Y: 1, Z: 0},
-		{X: 2, Y: 3, Z: 0},
+	innerContour := []float32{
+		1, 1, 0,
+		3, 1, 0,
+		2, 3, 0,
 	}
 
 	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		tessellator := NewTessellator()
 		if tessellator == nil {
 			b.Fatal("Failed to create tessellator")
@@ -58,14 +52,8 @@ func BenchmarkComplexPolygon(b *testing.B) {
 		tessellator.AddContour(2, outerContour)
 		tessellator.AddContour(2, innerContour)
 		tessellator.SetOption(OptionConstrainedDelaunay, true)
-		tessellator.Tessellate(WindingOdd, ElementPolygons, 3, 2, nil)
-		
-		// Access results to ensure they're computed
-		_ = tessellator.GetVertexCount()
-		_ = tessellator.GetElementCount()
-		_ = tessellator.GetVertices()
-		_ = tessellator.GetElements()
-		
+		_, _, _ = tessellator.Tessellate(WindingOdd, ElementPolygons, 3, 2, nil)
+
 		tessellator.Delete()
 	}
 }
@@ -73,52 +61,40 @@ func BenchmarkComplexPolygon(b *testing.B) {
 // BenchmarkLargePolygon benchmarks a larger polygon with many vertices
 func BenchmarkLargePolygon(b *testing.B) {
 	// Create a circle approximation with many vertices
-	vertices := make([]Vertex, 100)
+	vertices := make([]float32, 100*2)
 	radius := 5.0
 	centerX, centerY := 0.0, 0.0
-	
-	for i := 0; i < 100; i++ {
+
+	for i := range 100 {
 		angle := 2 * math.Pi * float64(i) / 100
-		vertices[i] = Vertex{
-			X: float32(centerX + radius*math.Cos(angle)),
-			Y: float32(centerY + radius*math.Sin(angle)),
-			Z: 0,
-		}
+		vertices[i*2] = float32(centerX + radius*math.Cos(angle))
+		vertices[i*2+1] = float32(centerY + radius*math.Sin(angle))
 	}
 
 	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		tessellator := NewTessellator()
 		if tessellator == nil {
 			b.Fatal("Failed to create tessellator")
 		}
 
 		tessellator.AddContour(2, vertices)
-		tessellator.Tessellate(WindingOdd, ElementPolygons, 3, 2, nil)
-		
-		// Access results to ensure they're computed
-		_ = tessellator.GetVertexCount()
-		_ = tessellator.GetElementCount()
-		_ = tessellator.GetVertices()
-		_ = tessellator.GetElements()
-		
+		_, _, _ = tessellator.Tessellate(WindingOdd, ElementPolygons, 3, 2, nil)
+
 		tessellator.Delete()
 	}
 }
 
 // BenchmarkAddContour benchmarks just the AddContour operation
 func BenchmarkAddContour(b *testing.B) {
-	vertices := make([]Vertex, 1000)
+	vertices := make([]float32, 1000)
 	for i := 0; i < 1000; i++ {
-		vertices[i] = Vertex{
-			X: float32(i),
-			Y: float32(i * 2),
-			Z: 0,
-		}
+		vertices[i*2] = float32(i)
+		vertices[i*2+1] = float32(i * 2)
 	}
 
 	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		tessellator := NewTessellator()
 		if tessellator == nil {
 			b.Fatal("Failed to create tessellator")
@@ -131,10 +107,10 @@ func BenchmarkAddContour(b *testing.B) {
 
 // BenchmarkDataRetrieval benchmarks the data retrieval operations
 func BenchmarkDataRetrieval(b *testing.B) {
-	vertices := []Vertex{
-		{X: 0, Y: 0, Z: 0},
-		{X: 1, Y: 0, Z: 0},
-		{X: 0.5, Y: 1, Z: 0},
+	vertices := []float32{
+		0, 0, 0,
+		1, 0, 0,
+		0.5, 1, 0,
 	}
 
 	tessellator := NewTessellator()
@@ -144,31 +120,29 @@ func BenchmarkDataRetrieval(b *testing.B) {
 	defer tessellator.Delete()
 
 	tessellator.AddContour(2, vertices)
-	tessellator.Tessellate(WindingOdd, ElementPolygons, 3, 2, nil)
+	resultVertices, resultIndices, _ := tessellator.Tessellate(WindingOdd, ElementPolygons, 3, 2, nil)
 
 	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		_ = tessellator.GetVertexCount()
-		_ = tessellator.GetElementCount()
-		_ = tessellator.GetVertices()
-		_ = tessellator.GetElements()
-		_ = tessellator.GetVertexIndices()
+	for range b.N {
+		// Access the results to ensure they're computed
+		_ = len(resultVertices)
+		_ = len(resultIndices)
 	}
 }
 
 // BenchmarkWindingRules benchmarks different winding rules
 func BenchmarkWindingRules(b *testing.B) {
-	outerContour := []Vertex{
-		{X: 0, Y: 0, Z: 0},
-		{X: 4, Y: 0, Z: 0},
-		{X: 4, Y: 4, Z: 0},
-		{X: 0, Y: 4, Z: 0},
+	outerContour := []float32{
+		0, 0, 0,
+		4, 0, 0,
+		4, 4, 0,
+		0, 4, 0,
 	}
 
-	innerContour := []Vertex{
-		{X: 1, Y: 1, Z: 0},
-		{X: 3, Y: 1, Z: 0},
-		{X: 2, Y: 3, Z: 0},
+	innerContour := []float32{
+		1, 1, 0,
+		3, 1, 0,
+		2, 3, 0,
 	}
 
 	windingRules := []WindingRule{
@@ -180,9 +154,9 @@ func BenchmarkWindingRules(b *testing.B) {
 	}
 
 	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+	for i := range b.N {
 		rule := windingRules[i%len(windingRules)]
-		
+
 		tessellator := NewTessellator()
 		if tessellator == nil {
 			b.Fatal("Failed to create tessellator")
@@ -190,9 +164,8 @@ func BenchmarkWindingRules(b *testing.B) {
 
 		tessellator.AddContour(2, outerContour)
 		tessellator.AddContour(2, innerContour)
-		tessellator.Tessellate(rule, ElementPolygons, 3, 2, nil)
-		
-		_ = tessellator.GetElementCount()
+		_, _, _ = tessellator.Tessellate(rule, ElementPolygons, 3, 2, nil)
+
 		tessellator.Delete()
 	}
-} 
+}
